@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ALL">
+    <Properties>
+        <Property name="log-path_TS">D:/PingAn_Log/TS</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="TS-log" fileName="${log-path_TS}/TS.log"
+                     filePattern="${log-path_TS}/TS.log.%d{yyyy-MM-dd}-%i">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="200 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5">
+				<Delete basePath="${log-path_TS}" maxDepth="2">
+					<IfFileName glob="TS. *" />
+					<IfLastModified age="90d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.Common.model.Log4j" level="debug" additivity="false">
+            <appender-ref ref="TS-log" level="ALL"/>
+        </Logger>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="console-log"/>
+        </Root>
+    </Loggers>
+</Configuration>
